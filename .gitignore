@@ -24,3 +24,4 @@ yarn-error.log
 /.zed
 .env.example
 .editorconfig
+.$databaseEntities.drawio.bkp
