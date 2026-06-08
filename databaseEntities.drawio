@@ -163,6 +163,9 @@
         <mxCell id="GFzBY19F8Rj1943E4txP-63" edge="1" parent="1" source="GFzBY19F8Rj1943E4txP-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="GFzBY19F8Rj1943E4txP-42">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="XdfvsSyi7pfCk64hQVYq-6" edge="1" parent="1" source="GFzBY19F8Rj1943E4txP-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endArrow=none;endFill=0;" target="XdfvsSyi7pfCk64hQVYq-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="GFzBY19F8Rj1943E4txP-64" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Correspondences" vertex="1">
           <mxGeometry height="182" width="160" x="190" y="565" as="geometry" />
         </mxCell>
@@ -251,6 +254,15 @@
               <mxPoint x="570" y="630" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="XdfvsSyi7pfCk64hQVYq-1" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="Tag" vertex="1">
+          <mxGeometry height="78" width="140" x="200" y="392" as="geometry" />
+        </mxCell>
+        <mxCell id="XdfvsSyi7pfCk64hQVYq-2" parent="XdfvsSyi7pfCk64hQVYq-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ tag_id: int" vertex="1">
+          <mxGeometry height="26" width="140" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="XdfvsSyi7pfCk64hQVYq-3" parent="XdfvsSyi7pfCk64hQVYq-1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" value="+ name: string" vertex="1">
+          <mxGeometry height="26" width="140" y="52" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
