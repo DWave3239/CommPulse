@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Contact extends Model
 {
+    protected $fillable = [
+        'name',
+        'language'
+    ];
+
     public function band(): BelongsTo
     {
         return $this->belongsTo(Band::class);

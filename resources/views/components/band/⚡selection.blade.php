@@ -21,6 +21,7 @@ new class extends Component
         
         if (count($bands) == 1) {
             $this->currentBand = $bands[0]->id;
+            session(['currentBand' => $this->currentBand]);
         }
         
         return $bands;
@@ -29,6 +30,7 @@ new class extends Component
     public function setCurrentBand()
     {
         // reroute to the dashboard after changing the current band
+        session(['currentBand' => $this->currentBand]);
         return $this->redirect('/dashboard', navigate: true);
     }
 };
