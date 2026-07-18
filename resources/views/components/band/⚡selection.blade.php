@@ -18,10 +18,11 @@ new class extends Component
         $bands = User::find(Auth::id())
             ->bands()
             ->get();
-        
-        if (count($bands) == 1) {
+
+        if (!$this->currentBand && count($bands) > 0) {
             $this->currentBand = $bands[0]->id;
-            session(['currentBand' => $this->currentBand]);
+            Session::put('currentBand', $this->currentBand);
+            $this->dispatch('updated-band-selection'); 
         }
         
         return $bands;
@@ -30,7 +31,7 @@ new class extends Component
     public function setCurrentBand()
     {
         // reroute to the dashboard after changing the current band
-        session(['currentBand' => $this->currentBand]);
+        Session::put('currentBand', $this->currentBand);
         return $this->redirect('/dashboard', navigate: true);
     }
 };
