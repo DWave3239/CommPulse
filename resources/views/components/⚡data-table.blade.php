@@ -35,9 +35,13 @@ new class extends Component
             : $query->get();
     }
 
-    public function triggerAction($event, $id)
+    public function triggerAction($event, $id = null)
     {
-        $this->dispatch($event, id: $id);
+        if ($id) {
+            $this->dispatch($event, id: $id);
+        } else {
+            $this->dispatch($event);
+        }
     }
 };
 ?>
@@ -54,7 +58,7 @@ new class extends Component
                     <span>Actions</span>
                     @if($actions['add'])
                     <button 
-                        wire:click="dispatch({{ $actions['add'] }})" 
+                        wire:click="triggerAction('{{ $actions['add'] }}')" 
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full float-right"
                     >
                         Add
