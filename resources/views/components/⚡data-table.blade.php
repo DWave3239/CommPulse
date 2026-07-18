@@ -1,7 +1,6 @@
 <?php
 
 use App\Query\DataTableQuery;
-use App\Models\Contact;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
