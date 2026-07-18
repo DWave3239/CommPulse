@@ -8,6 +8,8 @@ new class extends Component
 {
     public ContactForm $form;
 
+    public string $closeAction;
+
     public function mount(Contact $contact)
     {
         $this->form->setContact($contact);
@@ -16,53 +18,26 @@ new class extends Component
     public function save()
     {
         $this->form->update();
-        $this->dispatch('contact-overlay-close'); 
+        $this->dispatch($this->closeAction);
     }
 };
 ?>
 
 <div>
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-        <div class="bg-gray-700 rounded-lg p-6 w-96">
-            <h2 class="text-xl font-bold mb-4">
-                Create Contact
-            </h2>
+    <livewire:modal title="Create Contact">
+        <form wire:submit="save">
+            <x-forms.input-text name="contactName" placeholder="Contact name" wire:model="form.name"/>
+            <x-forms.input-text name="contactLanguage" placeholder="Contact language" wire:model="form.language"/>
 
-            <form wire:submit="save">
-                <input 
-                    type="text" 
-                    placeholder="Contact name"
-                    class="border p-2 w-full"
-                    wire:model="form.name"
-                />
-                <div>
-                    @error('form.name') <span class="error">{{ $message }}</span> @enderror
-                </div>
-            
-                <input 
-                    type="text" 
-                    placeholder="Contact language"
-                    class="border p-2 w-full"
-                    wire:model="form.language"
-                />
-                <div>
-                    @error('form.language') <span class="error">{{ $message }}</span> @enderror
-                </div>
+            <div class="mt-4 flex justify-end gap-2">
+                <button class="px-4 py-2" wire.click="$dispatch({{ $closeAction }})">
+                    Cancel
+                </button>
 
-                <div class="mt-4 flex justify-end gap-2">
-                    <button
-                        class="px-4 py-2"
-                    >
-                        Cancel
-                    </button>
-
-                    <button
-                        class="bg-green-500 text-white px-4 py-2 rounded"
-                    >
-                        Save
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+                <button class="bg-green-500 text-white px-4 py-2 rounded" wire:click="save">
+                    Save
+                </button>
+            </div>
+        </form>
+    </livewire:modal>
 </div>
