@@ -9,23 +9,24 @@ use Illuminate\Support\Facades\Session;
 
 new class extends Component
 {
-    #[Session]
     public ?int $currentBand = null;
+
+    public function mount()
+    {
+        if (!$this->currentBand) {
+            $band = Auth::user()->bands()->first();
+
+            if ($band) {
+                $this->currentBand = $band->id;
+                Session::put('currentBand', $this->currentBand);
+            }
+        }
+    }
 
     #[Computed]
     public function bands()
     {
-        $bands = User::find(Auth::id())
-            ->bands()
-            ->get();
-
-        if (!$this->currentBand && count($bands) > 0) {
-            $this->currentBand = $bands[0]->id;
-            Session::put('currentBand', $this->currentBand);
-            $this->dispatch('updated-band-selection'); 
-        }
-        
-        return $bands;
+        return Auth::user()->bands()->get();
     }
 
     public function setCurrentBand()
@@ -39,12 +40,17 @@ new class extends Component
 
 <div>
     @if (count($this->bands) > 1)
-        <select wire:model="currentBand" wire:change="setCurrentBand">
-        @foreach ($this->bands as $band)
-            <option wire:key="{{ $band->id }}" value="{{ $band->id }}">{{ $band->name }}</option>
-        @endforeach
-        </select>
+        <flux:select wire:model="currentBand" wire:change="setCurrentBand">
+            @foreach ($this->bands as $band)
+                <flux:select.option 
+                    wire:key="{{ $band->id }}" 
+                    :value="$band->id"
+                >
+                    {{ $band->name }}
+                </flux:select.option>
+            @endforeach
+        </flux:select>
     @else
-        <div>{{ $this->bands[0]->name }}</div>
+        {{ $this->bands[0]->name }}
     @endif
 </div>
