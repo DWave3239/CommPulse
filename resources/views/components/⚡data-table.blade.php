@@ -55,12 +55,13 @@ new class extends Component
             <flux:table.column>
                 <span>Actions</span>
                 @if(!empty($actions['add']))
-                    <button 
+                    <flux:button 
+                        variant="primary" 
+                        color="cyan" 
                         wire:click="triggerAction('{{ $actions['add'] }}')" 
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
                     >
                         Add
-                    </button>
+                    </flux:button>
                 @endif
             </flux:table.column>
         @endif
@@ -76,20 +77,22 @@ new class extends Component
                 @if($actions)
                     <flux:table.cell>
                         @if(!empty($actions['edit']))
-                            <button
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            <flux:button 
+                                variant="primary" 
+                                color="cyan" 
                                 wire:click="triggerAction('{{ $actions['edit'] }}', {{ data_get($row, 'id') }})"
                             >
                                 Edit
-                            </button>
+                            </flux:button>
                         @endif
                         @if(!empty($actions['delete']))
-                            <button
+                            <flux:button
+                                variant="primary" 
+                                color="red"
                                 wire:click="triggerAction('{{ $actions['delete'] }}', {{ data_get($row, 'id') }})" 
-                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                             >
                                 Delete
-                            </button>
+                            </flux:button>
                         @endif
                     </flux:table.cell>
                 @endif
