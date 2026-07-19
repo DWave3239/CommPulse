@@ -2,10 +2,11 @@
 
 use App\Models\User;
 use App\Models\BandUser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 new class extends Component
 {
@@ -13,12 +14,15 @@ new class extends Component
 
     public function mount()
     {
+        $this->currentBand = Session::get('currentBand', null);
+
         if (!$this->currentBand) {
             $band = Auth::user()->bands()->first();
 
             if ($band) {
                 $this->currentBand = $band->id;
                 Session::put('currentBand', $this->currentBand);
+                $this->dispatch('updated-band-selection');
             }
         }
     }
@@ -31,7 +35,6 @@ new class extends Component
 
     public function setCurrentBand()
     {
-        // reroute to the dashboard after changing the current band
         Session::put('currentBand', $this->currentBand);
         return $this->redirect('/dashboard', navigate: true);
     }

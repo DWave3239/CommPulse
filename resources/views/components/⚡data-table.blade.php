@@ -53,11 +53,12 @@ new class extends Component
         @endforeach
         @if ($actions)
             <flux:table.column>
-                <span>Actions</span>
+                Actions &nbsp;
                 @if(!empty($actions['add']))
                     <flux:button 
                         variant="primary" 
                         color="cyan" 
+                        size="sm"
                         wire:click="triggerAction('{{ $actions['add'] }}')" 
                     >
                         Add
@@ -80,6 +81,7 @@ new class extends Component
                             <flux:button 
                                 variant="primary" 
                                 color="cyan" 
+                                size="sm"
                                 wire:click="triggerAction('{{ $actions['edit'] }}', {{ data_get($row, 'id') }})"
                             >
                                 Edit
@@ -89,6 +91,7 @@ new class extends Component
                             <flux:button
                                 variant="primary" 
                                 color="red"
+                                size="sm"
                                 wire:click="triggerAction('{{ $actions['delete'] }}', {{ data_get($row, 'id') }})" 
                             >
                                 Delete
