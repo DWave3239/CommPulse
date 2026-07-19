@@ -46,60 +46,54 @@ new class extends Component
 };
 ?>
 
-<div>
-    <table class="w-full text-sm text-left rtl:text-right text-body">
-        <thead class="dark:bg-gray-75">
-            <tr>
-                @foreach($headers as $header)
-                <th scope="col" class="px-6 py-3 font-medium">{{ $header }}</th>
-                @endforeach
-                @if ($actions)
-                <th scope="col" class="px-6 py-3 font-medium relative">
-                    <span>Actions</span>
-                    @if($actions['add'])
+<flux:table :paginate="$this->paginateBy ? $this->rows : null">
+    <flux:table.columns>
+        @foreach($headers as $header)
+            <flux:table.column>{{ $header }}</flux:table.column>
+        @endforeach
+        @if ($actions)
+            <flux:table.column>
+                <span>Actions</span>
+                @if(!empty($actions['add']))
                     <button 
                         wire:click="triggerAction('{{ $actions['add'] }}')" 
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full float-right"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
                     >
                         Add
                     </button>
-                    @endif
-                </th>
                 @endif
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($this->rows as $row)
-                <tr class="hover:bg-gray-500">
-                @foreach ($columns as $column)
-                    <td class="dark:border-gray-300 px-4 py-2">{{ data_get($row, $column) }}</td>
+            </flux:table.column>
+        @endif
+    </flux:table.columns>
+    <flux:table.rows>
+        @foreach($this->rows as $row)
+            <flux:table.row :key="data_get($row, 'id')">
+                @foreach($columns as $column)
+                    <flux:table.cell>
+                        {{ data_get($row, $column) }}
+                    </flux:table.cell>
                 @endforeach
                 @if($actions)
-                    <td class="dark:border-gray-300 px-4 py-2">
-                        @if($actions['edit'])
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                            wire:click="triggerAction('{{ $actions['edit'] }}', {{ data_get($row, 'id') }})"
-                        >
-                            Edit
-                        </button>
+                    <flux:table.cell>
+                        @if(!empty($actions['edit']))
+                            <button
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                wire:click="triggerAction('{{ $actions['edit'] }}', {{ data_get($row, 'id') }})"
+                            >
+                                Edit
+                            </button>
                         @endif
-                        @if($actions['delete'])
-                        <button
-                            wire:click="triggerAction('{{ $actions['delete'] }}', {{ data_get($row, 'id') }})" 
-                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
-                        >
-                            Delete
-                        </button>
+                        @if(!empty($actions['delete']))
+                            <button
+                                wire:click="triggerAction('{{ $actions['delete'] }}', {{ data_get($row, 'id') }})" 
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                            >
+                                Delete
+                            </button>
                         @endif
-                    </td>
+                    </flux:table.cell>
                 @endif
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    @if ($paginateBy)
-    {{ $this->rows->links() }}
-    @endif
-</div>
+            </flux:table.row>
+        @endforeach
+    </flux:table.rows>
+</flux:table>
