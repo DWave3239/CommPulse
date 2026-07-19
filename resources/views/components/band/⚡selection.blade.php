@@ -3,9 +3,9 @@
 use App\Models\User;
 use App\Models\BandUser;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Session;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 new class extends Component
 {
