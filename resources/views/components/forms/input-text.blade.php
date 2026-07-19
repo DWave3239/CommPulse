@@ -1,13 +1,10 @@
-@props(['name'])
+@props(['title', 'name', 'description'])
 
-<input 
-    type="text" 
-    name="{{ $name }}"
-    {{ $attributes->merge([
-        'class' => 'form-input rounded-md border-gray-300 border p-2 w-full'
-    ]) }}
->
-
-<div>
-    @error($name) <span class="error">{{ $message }}</span> @enderror
-</div>
+<flux:field>
+    <flux:label>{{ $title ?? $name }}</flux:label>
+    @if($description ?? null)
+        <flux:description>{{ $description }}</flux:description>
+    @endif
+    <flux:input {{ $attributes }}/>
+    <flux:error name="{{ $name }}" />
+</flux:field>
