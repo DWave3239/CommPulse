@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Contact extends Model
 {
     protected $fillable = [
+        'band',
+        'venue',
         'name',
         'language'
     ];

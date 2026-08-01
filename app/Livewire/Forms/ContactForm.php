@@ -2,13 +2,21 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Band;
 use App\Models\Contact;
+use App\Models\Venue;
+use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class ContactForm extends Form
 {
     public ?Contact $contact;
+
+    #[Validate('required')]
+    public ?int $band_id;
+   
+    public ?int $venue_id;
 
     #[Validate('required|min:4')]
     public string $name;
@@ -22,24 +30,25 @@ class ContactForm extends Form
  
         $this->name = $contact->name;
         $this->language = $contact->language;
+        $this->venue_id = $contact->venue->id;
     }
- 
+
     public function store()
     {
+        $this->band_id = Session::get('currentBand');
+
         $this->validate();
- 
-        Contact::create($this->only(['name', 'language']));
+
+        Contact::create($this->only(['name', 'language', 'venue_id', 'band_id']));
         $this->reset();
 
         // or use Contact::create($this->pull()); to do both of the functions above 
     }
- 
+
     public function update()
     {
         $this->validate();
  
-        $this->contact->update(
-            $this->only(['name', 'language'])
-        );
+        $this->contact->update($this->only(['name', 'language', 'venue_id']));
     }
 }
