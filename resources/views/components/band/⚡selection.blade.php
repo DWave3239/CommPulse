@@ -14,17 +14,7 @@ new class extends Component
 
     public function mount()
     {
-        $this->currentBand = Session::get('currentBand', null);
-
-        if (!$this->currentBand) {
-            $band = Auth::user()->bands()->first();
-
-            if ($band) {
-                $this->currentBand = $band->id;
-                Session::put('currentBand', $this->currentBand);
-                $this->dispatch('updated-band-selection');
-            }
-        }
+        $this->currentBand = Session::get('currentBand');
     }
 
     #[Computed]
