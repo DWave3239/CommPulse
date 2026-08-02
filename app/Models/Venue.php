@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Venue extends Model
 {
+    protected $fillable = [
+        'description',
+        'location',
+        'contact'
+    ];
+
     public function contacts(): HasMany
     {
         return $this->hasMany(Contact::class);

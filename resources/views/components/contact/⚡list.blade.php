@@ -9,25 +9,23 @@ use Livewire\Component;
 new class extends Component
 {
     public ?Contact $chosenContact = null;
-    public bool $showAddEditDialog = false;
-
+    public string $modalName = 'upsertContactModal';
+    
     #[On('updated-band-selection')]
     public function reloadList()
     {
         unset($this->contacts);
     }
 
-    #[On('contact-show-add-overlay')]
-    public function handleAddOverlayShow()
+    #[On('contact-show-upsert-overlay')]
+    public function handleEditOverlayShow($id = null)
     {
-        $this->showAddEditDialog = true;
-    }
-
-    #[On('contact-show-edit-overlay')]
-    public function handleEditOverlayShow($id)
-    {
-        $this->chosenContact = Contact::find($id);
-        $this->showAddEditDialog = true;
+        if ($id) {
+            $this->chosenContact = Contact::find($id);
+        } else {
+            $this->chosenContact = null;
+        }
+        Flux::modal($this->modalName)->show();
     }
 
     #[On('contact-show-delete-overlay')]
@@ -36,11 +34,11 @@ new class extends Component
         $this->dispatch('open-confirm-delete', id: $id, entityClass: Contact::class);
     }
     
-    #[On('contact-overlay-close')]
+    #[On('contact-upsert-modal-close')]
     public function handleOverlayClose()
     {
+        Flux::modal($this->modalName)->close();
         $this->chosenContact = null;
-        $this->showAddEditDialog = false;
         $this->reloadList();
     }
 
@@ -81,17 +79,22 @@ new class extends Component
         :queries="[ContactWithBand::class]"
         :headers="['ID', 'Venue', 'Name', 'Language']" 
         :columns="['id', 'venue.description', 'name', 'language']"
-        :actions="['add' => 'contact-show-add-overlay', 'edit' => 'contact-show-edit-overlay', 'delete' => 'contact-show-delete-overlay']"
+        :actions="['add' => 'contact-show-upsert-overlay', 'edit' => 'contact-show-upsert-overlay', 'delete' => 'contact-show-delete-overlay']"
         paginateBy="10"
     />
 
     <!-- modals -->
-    @if ($showAddEditDialog)
-    <livewire:contact.add-edit 
-        :contact="$chosenContact"
-        :actions="['close' => 'contact-overlay-close']"
-    />
-    @endif
+    <livewire:modal.upsert 
+        title="Create Contact"
+        name="{{ $modalName }}"
+        saveEvent="contact-save"
+        cancelEvent="contact-upsert-modal-close"
+    >
+        <livewire:contact.upsert 
+            :contact="$chosenContact"
+            :actions="['close' => 'contact-upsert-modal-close']"
+        />
+    </livewire:modal.upsert>
 
     <livewire:modal.confirm
         title="Delete contact"
